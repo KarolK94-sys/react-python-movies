@@ -1,134 +1,143 @@
-# 🎬 React-Python Movies Application
+# Aplikacja React-Python Movies
 
-A modern full-stack movie database application with a beautiful React frontend and FastAPI backend. Manage your favorite movies with features like search, edit, and actor management.
+Nowoczesna aplikacja webowa do zarządzania bazą filmów. Połączenie frontend'u React z backend'iem FastAPI. Umożliwia dodawanie, usuwanie, edycję filmów oraz zarządzanie aktorami.
 
-## ✨ Features
-
-### Core Features (Grade 3.0)
-- ✅ Add movies to the database
-- ✅ Delete movies from the list
-- ✅ Display movies in real-time
-
-### Extended Features (Grade 4.0+)
-- ✅ **Actors Management** - Add comma-separated actors to each film
-- ✅ **Edit Functionality** - Update movie details anytime
-- ✅ **Search & Filter** - Find movies by title, director, actors, or description
-- ✅ **Toast Notifications** - Real-time feedback on actions
-- ✅ **Modern UI** - Beautiful gradient design with smooth animations
-- ✅ **Responsive Design** - Works perfectly on mobile, tablet, and desktop
-
-### Bonus Features (Grade 5.0)
-- 🎨 **Beautiful Animations** - Smooth transitions and hover effects
-- 🔍 **Advanced Search** - Real-time filtering across all fields
-- 📱 **Fully Responsive** - Mobile-first design
-- 🎭 **Actor Support** - Manage multiple actors per film
-- ✏️ **Full CRUD** - Create, Read, Update, Delete operations
-- 🛡️ **Error Handling** - Graceful error management
-- 🔐 **SQL Injection Prevention** - Parameterized queries
-
-## 🚀 Tech Stack
+## Stos technologiczny
 
 ### Frontend
 - React 18.3
-- React-Toastify (notifications)
+- React-Toastify (powiadomienia)
 - Milligram CSS Framework
-- Modern CSS with Flexbox & Grid
+- CSS z Flexbox i Grid
 
 ### Backend
 - FastAPI
 - SQLite3
 - Python 3.9+
-- CORS support
+- Obsługa CORS
 
-## 📋 Prerequisites
+## Wymagania
 
 - Node.js 18+
 - Python 3.9+
-- npm or yarn
-- Docker (for containerized deployment)
+- npm lub yarn
+- Docker (do deployment'u w kontenerze)
 
-## 🔧 Local Development
+## Uruchomienie lokalnie
 
-### Backend Setup
+### Setup Backend
+
 ```bash
 cd api
 pip install -r requirements.txt
 fastapi dev main.py
 ```
-Backend runs on `http://localhost:8000`
 
-### Frontend Setup (in new terminal)
+Backend dostępny na: http://localhost:8000
+
+### Setup Frontend (w nowym terminalu)
+
 ```bash
 cd ui
 npm install
 npm start
 ```
-Frontend runs on `http://localhost:3000`
 
-## 🐳 Docker Deployment
+Frontend dostępny na: http://localhost:3000
 
-### Build and Run Locally
+Uwaga: Backend musi być uruchomiony, aby frontend mógł pobierać dane.
+
+## Deployment za pomocą Docker
+
+### Budowanie i uruchamianie lokalnie
+
 ```bash
 docker build -t react-python-movies .
 docker run -p 8000:80 react-python-movies
 ```
-App runs on `http://localhost:8000`
 
-## 🌐 Deploy to Render.com
+Aplikacja dostępna na: http://localhost:8000
 
-1. **Fork this repository** on GitHub
-2. **Go to [render.com](https://render.com)**
-3. **Create new Web Service**
-4. **Connect your GitHub repository**
-5. **Configure:**
-   - Build Command: `bash build.sh`
-   - Start Command: `uvicorn api.main:app --port 80 --host 0.0.0.0`
+## Deployment na Render.com
+
+### Krok 1: Przygotowanie repozytorium
+
+Upewnij się, że wszystkie zmiany są zacommitowane i spushowane do GitHub.
+
+```bash
+git add .
+git commit -m "Aplikacja gotowa do deploymentu"
+git push origin main
+```
+
+### Krok 2: Wdrożenie na Render
+
+1. Wejdź na https://render.com
+2. Zaloguj się lub utwórz konto
+3. Kliknij "New+" a następnie "Web Service"
+4. Wybierz swoje repozytorium (react-python-movies)
+5. Skonfiguruj następujące parametry:
+   - Name: react-python-movies
+   - Region: Oregon (darmowy tier)
    - Environment: Docker
-6. **Deploy!**
+   - Branch: main
+6. Kliknij "Create Web Service"
+7. Czekaj około 10 minut na zbudowanie i deployment
 
-## 📊 API Endpoints
+Po ukończeniu deployment'u aplikacja będzie dostępna pod adresem:
+```
+https://react-python-movies-[kod].onrender.com
+```
 
-### Movies
-- `GET /movies` - Get all movies (supports ?search=query)
-- `GET /movies/{id}` - Get single movie
-- `POST /movies` - Add new movie
-- `PUT /movies/{id}` - Update movie
-- `DELETE /movies/{id}` - Delete movie
-- `DELETE /movies` - Delete all movies
+## Endpointy API
 
-### Search
-- `GET /search?q=query` - Full-text search
+### Filmy
+- GET /movies - Pobierz wszystkie filmy (obsługuje parametr ?search=szukany_tekst)
+- GET /movies/{id} - Pobierz konkretny film
+- POST /movies - Dodaj nowy film
+- PUT /movies/{id} - Edytuj film
+- DELETE /movies/{id} - Usuń film
+- DELETE /movies - Usuń wszystkie filmy
 
-### Frontend Static
-- `GET /` - Serves React app
-- `GET /static/*` - Serves static assets
+### Wyszukiwanie
+- GET /search?q=szukany_tekst - Wyszukaj filmy
 
-## 📦 Project Structure
+### Pliki statyczne Frontend
+- GET / - Serwuje aplikację React
+- GET /static/* - Serwuje zasoby statyczne
+
+## Struktura projektu
 
 ```
 react-python-movies/
 ├── api/
-│   ├── main.py           # FastAPI application
-│   ├── requirements.txt   # Python dependencies
-│   ├── movies.db        # SQLite database
-│   └── test_main.http   # HTTP test file
+│   ├── main.py                 # Aplikacja FastAPI
+│   ├── requirements.txt         # Zależności Python
+│   ├── movies.db               # Baza danych SQLite
+│   ├── check_schema.py          # Skrypt sprawdzający schemat
+│   ├── migrate_db.py            # Skrypt migracji bazy
+│   └── test_main.http           # Plik do testowania API
 ├── ui/
 │   ├── src/
-│   │   ├── App.js       # Main React component
-│   │   ├── MovieForm.js # Form component
-│   │   ├── MoviesList.js # List display
-│   │   ├── MovieListItem.js # Card component
-│   │   └── App.css      # Styling
+│   │   ├── App.js               # Główny komponent React
+│   │   ├── MovieForm.js         # Komponent formularza
+│   │   ├── MoviesList.js        # Komponent listy filmów
+│   │   ├── MovieListItem.js     # Komponent karty filmu
+│   │   └── App.css              # Style aplikacji
 │   ├── package.json
 │   └── public/
-├── Dockerfile           # Container configuration
-├── build.sh            # Build script
-└── README.md           # This file
+│       ├── index.html           # Główny plik HTML
+│       └── manifest.json
+├── Dockerfile                   # Konfiguracja kontenera Docker
+├── build.sh                     # Skrypt budowania
+├── DOKUMENTACJA.md              # Dokumentacja techniczna
+└── README.md                    # Informacje o projekcie
 ```
 
-## 🎬 Database Schema
+## Schemat bazy danych
 
-### Movies Table
+### Tabela movies
+
 ```sql
 CREATE TABLE movies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -140,73 +149,100 @@ CREATE TABLE movies (
 );
 ```
 
-## 🎨 Design Features
+### Pola
 
-- **Color Scheme**: Purple/Blue gradient (#667eea to #764ba2)
-- **Typography**: Clean, modern sans-serif
-- **Layout**: Responsive grid system
-- **Animations**: Smooth transitions and micro-interactions
-- **Accessibility**: High contrast, readable fonts
+| Pole | Typ | Opis |
+|------|-----|------|
+| id | INTEGER | Unikalny identyfikator (auto-inkrementacja) |
+| title | TEXT | Nazwa filmu (wymagane) |
+| year | INTEGER | Rok wydania |
+| director | TEXT | Imię i nazwisko reżysera |
+| description | TEXT | Opis fabułki |
+| actors | TEXT | Aktorzy (rozdzieleni przecinkami) |
 
-## 🧪 Testing
+## Testowanie aplikacji
 
-Use the included `api/test_main.http` file with VS Code REST Client extension or tools like:
-- Postman
-- Insomnia
-- curl
+### Lokalnie
+1. Otwórz http://localhost:3000
+2. Kliknij przycisk "Dodaj film"
+3. Wypełnij formularz danymi
+4. Kliknij przycisk dodawania
+5. Powinno wyświetlić się powiadomienie o pomyślnym dodaniu
+6. Film powinien pojawić się na liście
 
-Example:
+### Online
+Odwiedź: https://react-python-movies-varw.onrender.com
+
+## Rozwiązywanie problemów
+
+### Frontend nie wyświetla filmów
+
+Przyczyna: Backend nie jest uruchomiony
+
+Rozwiązanie: Upewnij się, że terminal z backendem działa
 ```bash
-# Get all movies
-curl http://localhost:8000/movies
-
-# Search movies
-curl "http://localhost:8000/search?q=Matrix"
-
-# Add movie
-curl -X POST http://localhost:8000/movies \
-  -H "Content-Type: application/json" \
-  -d '{"title":"The Matrix","year":1999,"director":"Lana Wachowski","actors":"Keanu Reeves","description":"A computer hacker learns about the true nature of reality"}'
+cd api
+fastapi dev main.py
 ```
 
-## 🐛 Troubleshooting
+### Błąd "Connection refused"
 
-### "Connection refused" on localhost:3000
-- Check if frontend is running: `npm start` in `/ui`
+Przyczyna: Port jest już zajęty lub usługa nie słucha
 
-### "Connection refused" on localhost:8000
-- Check if backend is running: `fastapi dev main.py` in `/api`
+Rozwiązanie: Zmień port lub zabij proces na danym porcie
 
-### Database errors
-- Ensure `movies.db` exists in `/api`
-- Check file permissions
+### Build nie powiódł się na Render
 
-### Build fails on Render
-- Check `build.sh` has correct paths
-- Verify `package.json` has all dependencies
-- Check logs on Render dashboard
+Przyczyna: Brak zależności lub błąd w konfiguracji
 
-## 📝 Grade Rubric
+Rozwiązanie: Sprawdź logi na dashboard Render.com i upewnij się, że:
+- package.json zawiera wszystkie zależności
+- Dockerfile jest poprawny
+- requirements.txt zawiera właściwe wersje pakietów
 
-| Grade | Requirements |
-|-------|--------------|
-| **3.0** | Add & delete movies ✅ |
-| **4.0** | + Actor management ✅ |
-| **5.0** | + Search, Edit, UI/UX, Animations ✅ |
+## Notki deweloperskie
 
-## 👨‍💻 Author
+### Bezpieczeństwo
+- Wszystkie zapytania do bazy danych używają parametryzowanych zapytań
+- Frontend waliduje dane przed wysłaniem do backendu
+- Backend dodatkowo waliduje wszystkie dane wejściowe
 
-**Karol Kempski**  
-AGH University of Science and Technology  
-Web Application Technology Course
+### Performance
+- SQLite jest wystarczająco wydajny dla aplikacji edukacyjnej
+- Dla większych aplikacji rozważ migrację na PostgreSQL
+- Wyszukiwanie wykorzystuje LIKE, dla dużych zbiorów danych rozważ full-text search
 
-## 📄 License
+### Rozszerzalność
+- Architektura umożliwia łatwe dodanie autoryzacji
+- Można rozszerzyć o inne zasoby (reżyserzy, gatunki, itp.)
+- Frontend jest modularny - łatwo dodać nowe komponenty
 
-MIT License - Feel free to use this project for educational purposes.
+## Szybki start
 
----
+```bash
+# Sklonuj repozytorium
+git clone https://github.com/KarolK94-sys/react-python-movies
+cd react-python-movies
 
-**🎯 Live Demo:** [Deployed on Render.com]  
-**📚 Repository:** [GitHub](https://github.com/KarolK94-sys/react-python-movies)
+# Terminal 1 - Backend
+cd api
+pip install -r requirements.txt
+fastapi dev main.py
 
-Made with ❤️ for learning full-stack web development
+# Terminal 2 - Frontend
+cd ui
+npm install
+npm start
+
+# Aplikacja będzie dostępna na http://localhost:3000
+```
+
+## Licencja
+
+MIT License - do użytku edukacyjnego
+
+## Autor
+
+Karol Kempski
+Uniwersytet AGH w Krakowie
+Przedmiot: Technologia Aplikacji Internetowych
