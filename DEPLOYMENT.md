@@ -1,4 +1,4 @@
-# Aplikacja React-Python Movies
+﻿# Aplikacja React-Python Movies
 
 Nowoczesna aplikacja webowa do zarządzania bazą filmów. Połączenie frontend'u React z backend'iem FastAPI. Umożliwia dodawanie, usuwanie, edycję filmów oraz zarządzanie aktorami.
 
@@ -27,21 +27,21 @@ Nowoczesna aplikacja webowa do zarządzania bazą filmów. Połączenie frontend
 
 ### Setup Backend
 
-```bash
+\\\ash
 cd api
 pip install -r requirements.txt
 fastapi dev main.py
-```
+\\\
 
 Backend dostępny na: http://localhost:8000
 
 ### Setup Frontend (w nowym terminalu)
 
-```bash
+\\\ash
 cd ui
 npm install
 npm start
-```
+\\\
 
 Frontend dostępny na: http://localhost:3000
 
@@ -51,10 +51,10 @@ Uwaga: Backend musi być uruchomiony, aby frontend mógł pobierać dane.
 
 ### Budowanie i uruchamianie lokalnie
 
-```bash
+\\\ash
 docker build -t react-python-movies .
 docker run -p 8000:80 react-python-movies
-```
+\\\
 
 Aplikacja dostępna na: http://localhost:8000
 
@@ -64,11 +64,11 @@ Aplikacja dostępna na: http://localhost:8000
 
 Upewnij się, że wszystkie zmiany są zacommitowane i spushowane do GitHub.
 
-```bash
+\\\ash
 git add .
 git commit -m "Aplikacja gotowa do deploymentu"
 git push origin main
-```
+\\\
 
 ### Krok 2: Wdrożenie na Render
 
@@ -85,9 +85,9 @@ git push origin main
 7. Czekaj około 10 minut na zbudowanie i deployment
 
 Po ukończeniu deployment'u aplikacja będzie dostępna pod adresem:
-```
+\\\
 https://react-python-movies-[kod].onrender.com
-```
+\\\
 
 ## Endpointy API
 
@@ -108,37 +108,37 @@ https://react-python-movies-[kod].onrender.com
 
 ## Struktura projektu
 
-```
+\\\
 react-python-movies/
-├── api/
-│   ├── main.py                 # Aplikacja FastAPI
-│   ├── requirements.txt         # Zależności Python
-│   ├── movies.db               # Baza danych SQLite
-│   ├── check_schema.py          # Skrypt sprawdzający schemat
-│   ├── migrate_db.py            # Skrypt migracji bazy
-│   └── test_main.http           # Plik do testowania API
-├── ui/
-│   ├── src/
-│   │   ├── App.js               # Główny komponent React
-│   │   ├── MovieForm.js         # Komponent formularza
-│   │   ├── MoviesList.js        # Komponent listy filmów
-│   │   ├── MovieListItem.js     # Komponent karty filmu
-│   │   └── App.css              # Style aplikacji
-│   ├── package.json
-│   └── public/
-│       ├── index.html           # Główny plik HTML
-│       └── manifest.json
-├── Dockerfile                   # Konfiguracja kontenera Docker
-├── build.sh                     # Skrypt budowania
-├── DOKUMENTACJA.md              # Dokumentacja techniczna
-└── README.md                    # Informacje o projekcie
-```
+ api/
+    main.py                 # Aplikacja FastAPI
+    requirements.txt         # Zależności Python
+    movies.db               # Baza danych SQLite
+    check_schema.py          # Skrypt sprawdzający schemat
+    migrate_db.py            # Skrypt migracji bazy
+    test_main.http           # Plik do testowania API
+ ui/
+    src/
+       App.js               # Główny komponent React
+       MovieForm.js         # Komponent formularza
+       MoviesList.js        # Komponent listy filmów
+       MovieListItem.js     # Komponent karty filmu
+       App.css              # Style aplikacji
+    package.json
+    public/
+        index.html           # Główny plik HTML
+        manifest.json
+ Dockerfile                   # Konfiguracja kontenera Docker
+ build.sh                     # Skrypt budowania
+ DOKUMENTACJA.md              # Dokumentacja techniczna
+ README.md                    # Informacje o projekcie
+\\\
 
 ## Schemat bazy danych
 
 ### Tabela movies
 
-```sql
+\\\sql
 CREATE TABLE movies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
@@ -147,18 +147,7 @@ CREATE TABLE movies (
     description TEXT,
     actors TEXT
 );
-```
-
-### Pola
-
-| Pole | Typ | Opis |
-|------|-----|------|
-| id | INTEGER | Unikalny identyfikator (auto-inkrementacja) |
-| title | TEXT | Nazwa filmu (wymagane) |
-| year | INTEGER | Rok wydania |
-| director | TEXT | Imię i nazwisko reżysera |
-| description | TEXT | Opis fabułki |
-| actors | TEXT | Aktorzy (rozdzieleni przecinkami) |
+\\\
 
 ## Testowanie aplikacji
 
@@ -180,10 +169,10 @@ Odwiedź: https://react-python-movies-varw.onrender.com
 Przyczyna: Backend nie jest uruchomiony
 
 Rozwiązanie: Upewnij się, że terminal z backendem działa
-```bash
+\\\ash
 cd api
 fastapi dev main.py
-```
+\\\
 
 ### Błąd "Connection refused"
 
@@ -219,7 +208,7 @@ Rozwiązanie: Sprawdź logi na dashboard Render.com i upewnij się, że:
 
 ## Szybki start
 
-```bash
+\\\ash
 # Sklonuj repozytorium
 git clone https://github.com/KarolK94-sys/react-python-movies
 cd react-python-movies
@@ -235,7 +224,7 @@ npm install
 npm start
 
 # Aplikacja będzie dostępna na http://localhost:3000
-```
+\\\
 
 ## Licencja
 
