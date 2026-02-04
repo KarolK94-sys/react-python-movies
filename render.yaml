@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: react-python-movies
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: oregon
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9
