@@ -1,8 +1,10 @@
+import {useState} from "react";
+
 export default function MovieListItem(props) {
     const [isDeleting, setIsDeleting] = useState(false);
     
     async function handleDelete() {
-        if (window.confirm(`Are you sure you want to delete "${props.movie.title}"?`)) {
+        if (window.confirm(`🤔 Are you sure you want to delete "${props.movie.title}"?`)) {
             setIsDeleting(true);
             await props.onDelete();
             setIsDeleting(false);
@@ -10,39 +12,47 @@ export default function MovieListItem(props) {
     }
 
     return (
-        <div style={{marginBottom: '15px', padding: '10px', border: '1px solid #ddd', borderRadius: '4px'}}>
-            <div>
-                <strong>{props.movie.title}</strong>
-                {' '}
-                <span style={{color: '#666'}}>({props.movie.year})</span>
-                {props.movie.director && (
-                    <>
-                        {' '}
-                        <br />
-                        directed by <em>{props.movie.director}</em>
-                    </>
-                )}
+        <div className="movie-card">
+            <div className="movie-header">
+                <div>
+                    <h3>{props.movie.title}</h3>
+                    <p className="movie-year">📅 {props.movie.year}</p>
+                </div>
             </div>
+            
+            {props.movie.director && (
+                <p className="movie-director">
+                    <strong>🎬 Director:</strong> {props.movie.director}
+                </p>
+            )}
+            
+            {props.movie.actors && (
+                <p className="movie-actors">
+                    <strong>🎭 Actors:</strong> {props.movie.actors}
+                </p>
+            )}
+            
             {props.movie.description && (
-                <p style={{margin: '5px 0', fontSize: '0.95em', color: '#555'}}>
+                <p className="movie-description">
                     {props.movie.description}
                 </p>
             )}
-            <button 
-                onClick={handleDelete}
-                disabled={isDeleting}
-                style={{
-                    background: '#c0392b', 
-                    color: 'white',
-                    padding: '5px 10px',
-                    fontSize: '0.9em',
-                    cursor: isDeleting ? 'not-allowed' : 'pointer'
-                }}
-            >
-                {isDeleting ? 'Deleting...' : '🗑️ Delete'}
-            </button>
+            
+            <div className="movie-actions">
+                <button 
+                    onClick={() => props.onEditMovie(props.movie)}
+                    className="btn-edit"
+                >
+                    ✏️ Edit
+                </button>
+                <button 
+                    onClick={handleDelete}
+                    disabled={isDeleting}
+                    className="btn-delete"
+                >
+                    {isDeleting ? '⏳ Deleting...' : '🗑️ Delete'}
+                </button>
+            </div>
         </div>
     );
 }
-
-import {useState} from "react";

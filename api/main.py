@@ -9,9 +9,10 @@ import sqlite3
 
 class Movie(BaseModel):
     title: str
-    year: str
+    year: int
     director: str = ""
     description: str = ""
+    actors: str = ""
 
 app = FastAPI()
 
@@ -31,11 +32,20 @@ def serve_react_app():
    return FileResponse("../ui/build/index.html")
 
 @app.get('/movies')
-def get_movies():
+def get_movies(search: str = ""):
     try:
         db = sqlite3.connect('movies.db')
         cursor = db.cursor()
-        movies = cursor.execute('SELECT * FROM movies')
+        
+        if search:
+            query = '''
+                SELECT * FROM movies 
+                WHERE title LIKE ? OR director LIKE ? OR actors LIKE ? OR description LIKE ?
+            '''
+            search_term = f"%{search}%"
+            movies = cursor.execute(query, (search_term, search_term, search_term, search_term))
+        else:
+            movies = cursor.execute('SELECT * FROM movies')
 
         output = []
         for movie in movies:
@@ -44,7 +54,8 @@ def get_movies():
                 'title': movie[1], 
                 'year': movie[2], 
                 'director': movie[3] if len(movie) > 3 else "",
-                'description': movie[4] if len(movie) > 4 else ""
+                'description': movie[4] if len(movie) > 4 else "",
+                'actors': movie[5] if len(movie) > 5 else ""
             }
             output.append(movie_dict)
         db.close()
@@ -68,7 +79,8 @@ def get_single_movie(movie_id: int):
             'title': movie[1], 
             'year': movie[2], 
             'director': movie[3] if len(movie) > 3 else "",
-            'description': movie[4] if len(movie) > 4 else ""
+            'description': movie[4] if len(movie) > 4 else "",
+            'actors': movie[5] if len(movie) > 5 else ""
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -79,8 +91,8 @@ def add_movie(movie: Movie):
         db = sqlite3.connect('movies.db')
         cursor = db.cursor()
         cursor.execute(
-            "INSERT INTO movies (title, year, director, description) VALUES (?, ?, ?, ?)",
-            (movie.title, movie.year, movie.director, movie.description)
+            "INSERT INTO movies (title, year, director, description, actors) VALUES (?, ?, ?, ?, ?)",
+            (movie.title, movie.year, movie.director, movie.description, movie.actors)
         )
         db.commit()
         movie_id = cursor.lastrowid
@@ -94,7 +106,8 @@ def add_movie(movie: Movie):
                 "title": movie.title,
                 "year": movie.year,
                 "director": movie.director,
-                "description": movie.description
+                "description": movie.description,
+                "actors": movie.actors
             }
         }
     except Exception as e:
@@ -106,8 +119,8 @@ def update_movie(movie_id: int, movie: Movie):
         db = sqlite3.connect('movies.db')
         cursor = db.cursor()
         cursor.execute(
-            "UPDATE movies SET title = ?, year = ?, director = ?, description = ? WHERE id = ?",
-            (movie.title, movie.year, movie.director, movie.description, movie_id)
+            "UPDATE movies SET title = ?, year = ?, director = ?, description = ?, actors = ? WHERE id = ?",
+            (movie.title, movie.year, movie.director, movie.description, movie.actors, movie_id)
         )
         db.commit()
         
@@ -147,6 +160,36 @@ def delete_all_movies():
         count = cursor.rowcount
         db.close()
         return {"message": f"Deleted {count} movies"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/search")
+def search_movies(q: str):
+    """Wyszukaj filmy po tytule, reżyserie, aktorach lub opisie"""
+    try:
+        db = sqlite3.connect('movies.db')
+        cursor = db.cursor()
+        search_term = f"%{q}%"
+        cursor.execute(
+            """SELECT * FROM movies 
+               WHERE title LIKE ? OR director LIKE ? OR actors LIKE ? OR description LIKE ?
+               ORDER BY title ASC""",
+            (search_term, search_term, search_term, search_term)
+        )
+        
+        output = []
+        for movie in cursor.fetchall():
+            output.append({
+                'id': movie[0],
+                'title': movie[1],
+                'year': movie[2],
+                'director': movie[3] if len(movie) > 3 else "",
+                'description': movie[4] if len(movie) > 4 else "",
+                'actors': movie[5] if len(movie) > 5 else ""
+            })
+        db.close()
+        return output
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
